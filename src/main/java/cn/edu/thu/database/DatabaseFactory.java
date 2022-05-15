@@ -3,7 +3,8 @@ package cn.edu.thu.database;
 import cn.edu.thu.common.Config;
 import cn.edu.thu.database.fileformat.ORCManager;
 import cn.edu.thu.database.fileformat.ParquetManager;
-import cn.edu.thu.database.fileformat.TsFileManager;
+//import cn.edu.thu.database.fileformat.TsFileManager;
+import cn.edu.thu.database.iotdb.IoTDBManager;
 import cn.edu.thu.database.kairosdb.KairosDBManager;
 import cn.edu.thu.database.opentsdb.OpenTSDBManager;
 //import cn.edu.thu.database.waterwheel.WaterWheelManager;
@@ -14,6 +15,8 @@ public class DatabaseFactory {
     switch (config.DATABASE) {
       case "NULL":
         return new NullManager();
+      case "IOTDB": // 0.13.0
+        return new IoTDBManager(config);
 //      case "INFLUXDB":
 //        return new InfluxDBManager(config);
       case "OPENTSDB":
@@ -24,8 +27,8 @@ public class DatabaseFactory {
 //        return new SummaryStoreManager(config);
 //      case "WATERWHEEL":
 //        return new WaterWheelManager(config);
-      case "TSFILE":
-        return new TsFileManager(config);
+//      case "TSFILE":
+//        return new TsFileManager(config);
       case "PARQUET":
         return new ParquetManager(config);
       case "ORC":

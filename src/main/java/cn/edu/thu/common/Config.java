@@ -40,6 +40,12 @@ public class Config {
   public int THREAD_NUM = 1;
   public int BATCH_SIZE = 500;
 
+  public String IOTDB_HOST = "127.0.0.1";
+  public int IOTDB_PORT = 6667;
+  public String IOTDB_USERNAME = "root";
+  public String IOTDB_PASSWORD = "root";
+  public boolean IOTDB_ENABLE_THRIFT_COMPRESSION = false;
+
   public String INFLUXDB_URL = "http://127.0.0.1:8086";
 
   public String OPENTSDB_URL = "http://127.0.0.1:4242";
@@ -114,6 +120,15 @@ public class Config {
     useSynthetic = "SYNTHETIC".equals(DATA_SET);
     THREAD_NUM = Integer.parseInt(properties.getOrDefault("THREAD_NUM", THREAD_NUM).toString());
     DATA_DIR = properties.getOrDefault("DATA_DIR", DATA_DIR).toString();
+
+    IOTDB_HOST = properties.getOrDefault("IOTDB_HOST", IOTDB_HOST).toString();
+    IOTDB_PORT = Integer.parseInt(properties.getOrDefault("IOTDB_PORT", IOTDB_PORT).toString());
+    IOTDB_USERNAME = properties.getOrDefault("IOTDB_USERNAME", IOTDB_USERNAME).toString();
+    IOTDB_PASSWORD = properties.getOrDefault("IOTDB_PASSWORD", IOTDB_PASSWORD).toString();
+    IOTDB_ENABLE_THRIFT_COMPRESSION = Boolean.parseBoolean(
+        properties.getOrDefault("IOTDB_ENABLE_THRIFT_COMPRESSION", IOTDB_ENABLE_THRIFT_COMPRESSION)
+            .toString());
+
     INFLUXDB_URL = properties.getOrDefault("INFLUX_URL", INFLUXDB_URL).toString();
     OPENTSDB_URL = properties.getOrDefault("OPENTSDB_URL", OPENTSDB_URL).toString();
     KAIROSDB_URL = properties.getOrDefault("KAIROSDB_URL", KAIROSDB_URL).toString();
