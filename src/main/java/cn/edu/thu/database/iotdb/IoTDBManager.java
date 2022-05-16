@@ -82,21 +82,32 @@ public class IoTDBManager implements IDataBaseManager {
     }
 
     Tablet tablet = new Tablet(schema.getTag(), schemaList, records.size());
-
-    long[] timestamps = tablet.timestamps;
-    Object[] values = tablet.values;
-    tablet.bitMaps = new BitMap[values.length];
-    for (int i = 0; i < tablet.bitMaps.length; i++) {
-      tablet.bitMaps[i] = new BitMap(records.size());
-    }
     for (Record record : records) {
-      int row = tablet.rowSize++;
-      timestamps[row] = record.timestamp;
+      int rowIndex = tablet.rowSize++;
+      tablet.addTimestamp(rowIndex, record.timestamp);
       for (int i = 0; i < schema.getFields().length; i++) {
-        addToColumn(tablet.values[i], row, record.fields.get(i), tablet.bitMaps[i],
-            schema.getTypes()[i]);
+        Object value = record.fields.get(i);
+        if (value != null && schema.getTypes()[i] == String.class) {
+          value = new Binary((String) value);
+        }
+        tablet.addValue(schemaList.get(i).getMeasurementId(), rowIndex, value); // this function will handle bitmap mark null automatically
       }
     }
+
+//    long[] timestamps = tablet.timestamps;
+//    Object[] values = tablet.values;
+//    tablet.bitMaps = new BitMap[values.length];
+//    for (int i = 0; i < tablet.bitMaps.length; i++) {
+//      tablet.bitMaps[i] = new BitMap(records.size());
+//    }
+//    for (Record record : records) {
+//      int row = tablet.rowSize++;
+//      timestamps[row] = record.timestamp;
+//      for (int i = 0; i < schema.getFields().length; i++) {
+//        addToColumn(tablet.values[i], row, record.fields.get(i), tablet.bitMaps[i],
+//            schema.getTypes()[i]);
+//      }
+//    }
     return tablet;
   }
 
