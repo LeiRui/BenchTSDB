@@ -1,11 +1,11 @@
 package cn.edu.thu.common;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Config {
 
@@ -47,6 +47,7 @@ public class Config {
   public boolean IOTDB_ENABLE_THRIFT_COMPRESSION = false;
 
   public String INFLUXDB_URL = "http://127.0.0.1:8086";
+  public String INFLUXDB_DATABASE = "mydb";
 
   public String OPENTSDB_URL = "http://127.0.0.1:4242";
 //    public String OPENTSDB_URL = "http://192.168.10.64:4242";
@@ -129,7 +130,9 @@ public class Config {
         properties.getOrDefault("IOTDB_ENABLE_THRIFT_COMPRESSION", IOTDB_ENABLE_THRIFT_COMPRESSION)
             .toString());
 
-    INFLUXDB_URL = properties.getOrDefault("INFLUX_URL", INFLUXDB_URL).toString();
+    INFLUXDB_URL = properties.getOrDefault("INFLUXDB_URL", INFLUXDB_URL).toString();
+    INFLUXDB_DATABASE = properties.getOrDefault("INFLUXDB_DATABASE", INFLUXDB_DATABASE).toString();
+
     OPENTSDB_URL = properties.getOrDefault("OPENTSDB_URL", OPENTSDB_URL).toString();
     KAIROSDB_URL = properties.getOrDefault("KAIROSDB_URL", KAIROSDB_URL).toString();
     WATERWHEEL_IP = properties.getOrDefault("WATERWHEEL_IP", WATERWHEEL_IP).toString();

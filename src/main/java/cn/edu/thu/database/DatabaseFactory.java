@@ -4,6 +4,7 @@ import cn.edu.thu.common.Config;
 import cn.edu.thu.database.fileformat.ORCManager;
 import cn.edu.thu.database.fileformat.ParquetManager;
 //import cn.edu.thu.database.fileformat.TsFileManager;
+import cn.edu.thu.database.influxdb.InfluxDBManager;
 import cn.edu.thu.database.iotdb.IoTDBManager;
 import cn.edu.thu.database.kairosdb.KairosDBManager;
 import cn.edu.thu.database.opentsdb.OpenTSDBManager;
@@ -17,8 +18,8 @@ public class DatabaseFactory {
         return new NullManager();
       case "IOTDB": // 0.13.0
         return new IoTDBManager(config);
-//      case "INFLUXDB":
-//        return new InfluxDBManager(config);
+      case "INFLUXDB": // 1.8.10
+        return new InfluxDBManager(config);
       case "OPENTSDB":
         return new OpenTSDBManager(config);
       case "KAIROSDB":

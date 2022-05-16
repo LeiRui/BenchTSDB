@@ -60,7 +60,7 @@ public class IoTDBManager implements IDataBaseManager {
   @Override
   public long insertBatch(List<Record> records, Schema schema) { // use insertTablet interface
     Tablet tablet = genTablet(records, schema); // TODO: note here time is not included
-    System.out.println("insertBatch...");
+//    System.out.println("insertBatch...");
     long start = System.nanoTime();
     try {
       session.insertTablet(tablet);
