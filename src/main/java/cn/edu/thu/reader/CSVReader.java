@@ -48,9 +48,6 @@ public class CSVReader extends BasicReader {
 
   public CSVReader(Config config, List<String> files) {
     super(config, files);
-    if (!config.splitFileByDevice) {
-      overallSchema = collectSchemaFromFiles(files);
-    }
   }
 
   private IndexedSchema collectSchemaFromFiles(List<String> files) {
@@ -128,6 +125,9 @@ public class CSVReader extends BasicReader {
       schema.getPrecision()[i - 1] = defaultPrecision;
     }
 
+    if (overallSchema == null && !config.splitFileByDevice) {
+      overallSchema = collectSchemaFromFiles(files); // TODO: move this here
+    }
     // infer datatype using at most a batch of lines
     if (overallSchema == null) {
       inferTypeWithData(fieldNum, schema);
@@ -288,7 +288,7 @@ public class CSVReader extends BasicReader {
       if (t1 == null) {
         return t2;
       }
-      if (t2 ==null) {
+      if (t2 == null) {
         return t1;
       }
 
